@@ -86,6 +86,7 @@ public class CompetitionTest {
         varCompet2.remove(varPersonne);
         int sizeAfter = varCompet2.getCandidats().size();
         assertEquals(sizeBefore - 1, sizeAfter);
+        assertTrue(!varPersonne.getCompetitions().contains(varCompet2));
 	}
     
     @Test
@@ -101,6 +102,8 @@ public class CompetitionTest {
 		varCompet2.add(varPersonne);
 		varCompet2.delete();
 		assertTrue(!varPersonne.getCompetitions().contains(varCompet2));
+		assertTrue(!inscriptions.getCompetitions().contains(varCompet2));
+
 	}
 	
 	@Test
