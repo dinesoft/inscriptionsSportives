@@ -2,11 +2,14 @@ package JUnit;
 
 import static org.junit.Assert.*;
 
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import inscriptions.Candidat;
@@ -17,16 +20,36 @@ import inscriptions.Personne;
 
 
 public class CompetitionTest {
+	Inscriptions inscriptions ;
+	
+	Personne varPersonne ;
+	
+	Equipe varEquipe ;; 
+	
+	Competition varCompet1 ;
+	Competition varCompet2 ;
+	Competition varCompet1bis ;
 
-	Inscriptions inscriptions = Inscriptions.getInscriptions();
 	
-	Personne varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
+	@Before
+	public void setUp() {
+		
+		inscriptions = Inscriptions.getInscriptions();
+		
+		varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
+		
+		varEquipe = inscriptions.createEquipe("NomEquipe"); 
+		
+		varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
+		varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
+		varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
+	}
+
+	@After
+	public void tearDown() {
+		Inscriptions.getInscriptions().reinitialiser();
+	}
 	
-	Equipe varEquipe = inscriptions.createEquipe("NomEquipe"); 
-	
-	Competition varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
-	Competition varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
-	Competition varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
 	
 	@Test
 	public void testGetNomCompetition()
@@ -64,6 +87,13 @@ public class CompetitionTest {
         int sizeAfter = varCompet2.getCandidats().size();
         assertEquals(sizeBefore - 1, sizeAfter);
 	}
+    
+    @Test
+    public void testGetCandidatsAInscrire()
+    {
+    		//varCompet2.add(varPersonne);
+    		//assertTrue(varCompet2.getCandidatsAInscrire().contains(varPersonne));
+    }
     
 	@Test
 	public void testDelete()

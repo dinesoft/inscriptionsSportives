@@ -7,24 +7,55 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import inscriptions.Candidat;
 import inscriptions.Competition;
+import inscriptions.Equipe;
 import inscriptions.Inscriptions;
 import inscriptions.Personne;
 
 public class CandidatTest {
+	Inscriptions inscriptions ;
+	
+	Personne varPersonne ;
+	Personne varPersonne2 ;
+	
+	Equipe varEquipe ;; 
+	
+	Competition varCompet1 ;
+	Competition varCompet2 ;
+	Competition varCompet1bis ;
+
+	
+	@Before
+	public void setUp() {
 		
-	Inscriptions inscriptions = Inscriptions.getInscriptions();
-	Personne varPersonne = inscriptions.createPersonne("Thivet","Didine","Didine@test.fr");
-	Personne varPersonne2 = inscriptions.createPersonne("Thivet", "Didine", "Didine@test.fr");
+		inscriptions = Inscriptions.getInscriptions();
+		
+		varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
+		varPersonne2 = inscriptions.createPersonne("nomPersonne2", "prenomPersonne2", "mailPersonne2");
+		
+		varEquipe = inscriptions.createEquipe("NomEquipe"); 
+		
+		varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
+		varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
+		varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
+	}
+
+	@After
+	public void tearDown() {
+		Inscriptions.getInscriptions().reinitialiser();
+	}
+	
 	
 		@Test
 		public void testGetNom()
 		{
 			String getNom = varPersonne.getNom();
-			assertEquals("Thivet",getNom);
+			assertEquals("nomPersonne",getNom);
 		}
 
 		@Test
@@ -53,7 +84,7 @@ public class CandidatTest {
 		@Test
 		public void testCompareTo()
 		{
-			assertEquals(0, varPersonne.compareTo(varPersonne2));
+			assertEquals(0, varPersonne.compareTo(varPersonne));
 		}
 		
 		@Test

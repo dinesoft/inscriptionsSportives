@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import inscriptions.Candidat;
@@ -21,160 +23,98 @@ import inscriptions.Inscriptions;
 import inscriptions.Personne;
 
 public class InscriptionsTest {
-
-	@Test
-	public SortedSet<Competition> testGetCompetitions()
-	{
-		return Collections.unmodifiableSortedSet(competitions);
-	}
+	Inscriptions inscriptions ;
 	
-	@Test
-	public SortedSet<Candidat> testGetCandidats()
-	{
-		return Collections.unmodifiableSortedSet(candidats);
-	}
-
-	@Test
-	public SortedSet<Personne> testGetPersonnes()
-	{
-		SortedSet<Personne> personnes = new TreeSet<>();
-		for (Candidat c : getCandidats())
-			if (c instanceof Personne)
-				personnes.add((Personne)c);
-		return Collections.unmodifiableSortedSet(personnes);
-	}
-
-	@Test
-	public SortedSet<Equipe> testGetEquipes()
-	{
-		SortedSet<Equipe> equipes = new TreeSet<>();
-		for (Candidat c : getCandidats())
-			if (c instanceof Equipe)
-				equipes.add((Equipe)c);
-		return Collections.unmodifiableSortedSet(equipes);
-	}
-
-	@Test
-	public Competition testCreateCompetition(String nom, 
-			LocalDate dateCloture, boolean enEquipe)
-	{
-		Competition competition = new Competition(this, nom, dateCloture, enEquipe);
-		competitions.add(competition);
-		return competition;
-	}
-
-	@Test
-	public Personne testCreatePersonne(String nom, String prenom, String mail)
-	{
-		Personne personne = new Personne(this, nom, prenom, mail);
-		candidats.add(personne);
-		return personne;
-	}
+	Personne varPersonne ;
 	
-	@Test
-	public Equipe testCreateEquipe(String nom)
-	{
-		Equipe equipe = new Equipe(this, nom);
-		candidats.add(equipe);
-		return equipe;
-	}
+	Equipe varEquipe ;; 
 	
-	@Test
-	void testDelete(Competition competition)
-	{
-		competitions.remove(competition);
-	}
+	Competition varCompet1 ;
+	Competition varCompet2 ;
+	Competition varCompet1bis ;
+
 	
-	@Test
-	void testDelete(Candidat candidat)
-	{
-		candidats.remove(candidat);
-	}
-	
-	@Test
-	public static Inscriptions testGetInscriptions()
-	{
+	@Before
+	public void setUp() {
 		
-		if (inscriptions == null)
-		{
-			inscriptions = readObject();
-			if (inscriptions == null)
-				inscriptions = new Inscriptions();
-		}
-		return inscriptions;
+		inscriptions = Inscriptions.getInscriptions();
+		
+		varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
+		
+		varEquipe = inscriptions.createEquipe("NomEquipe"); 
+		
+		varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
+		varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
+		varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
 	}
 
+	@After
+	public void tearDown() {
+		Inscriptions.getInscriptions().reinitialiser();
+	}
+
+	
+	
 	@Test
-	public Inscriptions testReinitialiser()
+	public void testGetCompetitions()
 	{
-		inscriptions = new Inscriptions();
-		return getInscriptions();
+		assertTrue(inscriptions.getCompetitions().contains(varCompet1));
 	}
 	
 	@Test
-	public Inscriptions testRecharger()
+	public void testGetCandidats()
 	{
-		inscriptions = null;
-		return getInscriptions();
+		assertTrue(inscriptions.getCandidats().contains(varPersonne));
 	}
 	
 	@Test
-	private static Inscriptions readObject()
+	public void testGetPersonnes()
 	{
-		ObjectInputStream ois = null;
-		try
-		{
-			FileInputStream fis = new FileInputStream(FILE_NAME);
-			ois = new ObjectInputStream(fis);
-			return (Inscriptions)(ois.readObject());
-		}
-		catch (IOException | ClassNotFoundException e)
-		{
-			return null;
-		}
-		finally
-		{
-				try
-				{
-					if (ois != null)
-						ois.close();
-				} 
-				catch (IOException e){}
-		}	
+		assertTrue(inscriptions.getPersonnes().contains(varPersonne));
+	}
+	
+	@Test
+	public void testCreateCompetitions() 
+	{
+		assertTrue(inscriptions.getCompetitions().contains(varCompet1));
+	}
+	
+	@Test
+	public void testCreateEquipe()
+	{
+		assertTrue(inscriptions.getCandidats().contains(varEquipe));
+	}
+	
+	@Test
+	public void testCreateCandidat()
+	{
+		assertTrue(inscriptions.getCandidats().contains(varPersonne));
+	}
+	
+	@Test
+	public void testGetInscriptions()
+	{
+		assertNotNull(inscriptions);
+	}
+	
+	@Test
+	public void testReinitialiser()
+	{
+		inscriptions.reinitialiser();
+		assertNotNull("Reinitialisation reussie", inscriptions);
+	}
+	
+	@Test
+	public void testRecharger()
+	{
+		assertNotNull(inscriptions.recharger());
 	}	
 	
 	@Test
-	public void sauvegarder() throws IOException
+	public void testSauvegarder() throws IOException 
 	{
-		ObjectOutputStream oos = null;
-		try
-		{
-			FileOutputStream fis = new FileOutputStream(FILE_NAME);
-			oos = new ObjectOutputStream(fis);
-			oos.writeObject(this);
-		}
-		catch (IOException e)
-		{
-			throw e;
-		}
-		finally
-		{
-			try
-			{
-				if (oos != null)
-					oos.close();
-			} 
-			catch (IOException e){}
-		}
+		inscriptions.sauvegarder();
+		assertNotNull("Votre sauvegarde a bien été effectuée",inscriptions);
 	}
-	
-	@Test
-	public String toString()
-	{
-		return "Candidats : " + getCandidats().toString()
-			+ "\nCompetitions  " + getCompetitions().toString();
-	}
-	
-	
 
 }

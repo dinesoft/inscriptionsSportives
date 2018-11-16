@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collections;
 import java.util.Set;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import inscriptions.Competition;
@@ -15,11 +17,36 @@ import inscriptions.Personne;
 
 public class PersonneTest {
 
-	Inscriptions inscriptions = Inscriptions.getInscriptions();
-	Personne varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
-	Equipe varEquipe = inscriptions.createEquipe("NomEquipe"); 
-	Competition varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
-	Competition varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
+	Inscriptions inscriptions ;
+	
+	Personne varPersonne ;
+	
+	Equipe varEquipe ;; 
+	
+	Competition varCompet1 ;
+	Competition varCompet2 ;
+	Competition varCompet1bis ;
+
+	
+	@Before
+	public void setUp() {
+		
+		inscriptions = Inscriptions.getInscriptions();
+		
+		varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
+		
+		varEquipe = inscriptions.createEquipe("NomEquipe"); 
+		
+		varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
+		varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
+		varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
+	}
+
+	@After
+	public void tearDown() {
+		Inscriptions.getInscriptions().reinitialiser();
+	}
+	
 	
 	@Test
 	public void testGetPrenom()
