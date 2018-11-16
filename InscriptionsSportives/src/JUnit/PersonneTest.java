@@ -1,65 +1,69 @@
 package JUnit;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Collections;
 import java.util.Set;
 
+import org.junit.Test;
+
+import inscriptions.Competition;
 import inscriptions.Equipe;
+import inscriptions.Inscriptions;
+import inscriptions.Personne;
 
 public class PersonneTest {
 
+	Inscriptions inscriptions = Inscriptions.getInscriptions();
+	Personne varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
+	Equipe varEquipe = inscriptions.createEquipe("NomEquipe"); 
+	Competition varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
+	Competition varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
+	
 	@Test
-	public String testGetPrenom()
+	public void testGetPrenom()
 	{
-		return prenom;
+		assertTrue(varPersonne.getPrenom().contains("prenomPersonne"));
 	}
 
 	@Test
 	public void testSetPrenom(String prenom)
 	{
-		this.prenom = prenom;
+		varPersonne.setPrenom("Mya");
+		String setPrenom = varPersonne.getPrenom();
+		assertEquals("Mya", setPrenom);
 	}
 
 	@Test
-	public String testGetMail()
+	public void testGetMail()
 	{
-		return mail;
+		assertTrue(varPersonne.getPrenom().contains("mailPersonne"));
 	}
 
 	@Test
 	public void testSetMail(String mail)
 	{
-		this.mail = mail;
+		varPersonne.setMail("MyaMail");
+		String setMail = varPersonne.getMail();
+		assertEquals("MyaMail", setMail);
 	}
 
 	@Test
-	public Set<Equipe> testGetEquipes()
+	public void testGetEquipes()
 	{
-		return Collections.unmodifiableSet(equipes);
-	}
-	
-	@Test
-	boolean testAdd(Equipe equipe)
-	{
-		return equipes.add(equipe);
-	}
-	
-	@Test
-	boolean testRemove(Equipe equipe)
-	{
-		return equipes.remove(equipe);
+		assertTrue(inscriptions.getEquipes().contains(varEquipe));
 	}
 	
 	@Test
 	public void testDelete()
 	{
-		super.delete();
-		for (Equipe e : equipes)
-			e.remove(this);
+		varEquipe.add(varPersonne);
+		varPersonne.delete();
+		assertTrue(!varEquipe.getMembres().contains(varPersonne));
+		assertTrue(!inscriptions.getPersonnes().contains(varPersonne));
+		assertTrue(!inscriptions.getCandidats().contains(varPersonne));
 	}
 	
-	@Test
-	public String testToString()
-	{
-		return super.toString() + " membre de " + equipes.toString();
-	}
+
 }
