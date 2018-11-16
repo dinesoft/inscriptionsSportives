@@ -96,7 +96,7 @@ public class Inscriptions implements Serializable
 	}
 
 	/**
-	 * Créée une Candidat de type Personne. Ceci est le seul moyen, il n'y a pas
+	 * Créée un Candidat de type Personne. Ceci est le seul moyen, il n'y a pas
 	 * de constructeur public dans {@link Personne}.
 
 	 * @param nom
@@ -113,7 +113,7 @@ public class Inscriptions implements Serializable
 	}
 	
 	/**
-	 * Créée une Candidat de type équipe. Ceci est le seul moyen, il n'y a pas
+	 * Créée un Candidat de type équipe. Ceci est le seul moyen, il n'y a pas
 	 * de constructeur public dans {@link Equipe}.
 	 * @param nom
 	 * @param prenom
