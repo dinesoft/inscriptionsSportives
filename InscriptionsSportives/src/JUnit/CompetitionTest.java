@@ -19,62 +19,63 @@ import inscriptions.Personne;
 public class CompetitionTest {
 
 	Inscriptions inscriptions = Inscriptions.getInscriptions();
-	Competition VarCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
-	Competition VarCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
-	Competition VarCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
+	
+	Personne varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
+	
+	Equipe varEquipe = inscriptions.createEquipe("NomEquipe"); 
+	
+	Competition varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
+	Competition varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
+	Competition varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
 	
 	@Test
 	public void testGetNomCompetition()
 	{
-		String getNom = VarCompet1.getNom();
+		String getNom = varCompet1.getNom();
 		assertEquals("NomCompet1",getNom);
 
 	}
 	
     @Test
     public void testSetNom() {
-        VarCompet1.setNom("NomCompet3");
-        String setNom = VarCompet1.getNom();
+        varCompet1.setNom("NomCompet3");
+        String setNom = varCompet1.getNom();
 		assertEquals("NomCompet3", setNom);
     }
     
     @Test
     public void testGetCandidats() {
-        Personne Personne1 = inscriptions.createPersonne("Nom1", "Prenom1", "Email1");
-        VarCompet2.add(Personne1);
-        assertTrue(VarCompet2.getCandidats().contains(Personne1));
+        varCompet2.add(varPersonne);
+        assertTrue(varCompet2.getCandidats().contains(varPersonne));
     }
 
     @Test
-    public void testAddEquipe() {
-        Equipe VarEquipe = inscriptions.createEquipe("NomEquipe"); 
-        VarCompet1.add(VarEquipe);
-        assertTrue(VarCompet1.getCandidats().contains(VarEquipe));
+    public void testAddEquipe() {  
+        varCompet1.add(varEquipe);
+        assertTrue(varCompet1.getCandidats().contains(varEquipe));
     }
     
     @Test
 	public void testRemove()
 	{
-    		Personne Personne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
-    		VarCompet2.add(Personne);
-        int sizeBefore = VarCompet2.getCandidats().size();
-        VarCompet2.remove(Personne);
-        int sizeAfter = VarCompet2.getCandidats().size();
+    		varCompet2.add(varPersonne);
+        int sizeBefore = varCompet2.getCandidats().size();
+        varCompet2.remove(varPersonne);
+        int sizeAfter = varCompet2.getCandidats().size();
         assertEquals(sizeBefore - 1, sizeAfter);
 	}
     
 	@Test
 	public void testDelete()
 	{
-		Personne Personne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
-		VarCompet2.add(Personne);
-		VarCompet2.delete();
-		assertTrue(!Personne.getCompetitions().contains(VarCompet2));
+		varCompet2.add(varPersonne);
+		varCompet2.delete();
+		assertTrue(!varPersonne.getCompetitions().contains(varCompet2));
 	}
 	
 	@Test
 	public void testCompareTo()
 	{
-		assertEquals(0, VarCompet1.compareTo(VarCompet1bis));
+		assertEquals(0, varCompet1.compareTo(varCompet1bis));
 	}
 }

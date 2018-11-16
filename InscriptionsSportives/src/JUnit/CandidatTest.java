@@ -17,53 +17,49 @@ import inscriptions.Personne;
 public class CandidatTest {
 		
 	Inscriptions inscriptions = Inscriptions.getInscriptions();
-	Personne Personne = inscriptions.createPersonne("Thivet","Didine","Didine@test.fr");
-	Personne Personne2 = inscriptions.createPersonne("Thivet", "Didine", "Didine@test.fr");
+	Personne varPersonne = inscriptions.createPersonne("Thivet","Didine","Didine@test.fr");
+	Personne varPersonne2 = inscriptions.createPersonne("Thivet", "Didine", "Didine@test.fr");
 	
 		@Test
 		public void testGetNom()
 		{
-			String getNom = Personne.getNom();
+			String getNom = varPersonne.getNom();
 			assertEquals("Thivet",getNom);
-
 		}
 
 		@Test
 		public void testSetNom()
 		{
-			Personne.setNom("Mya");
-			String setNom = Personne.getNom();
+			varPersonne.setNom("Mya");
+			String setNom = varPersonne.getNom();
 			assertEquals("Mya", setNom);
-			
 		}
 
 		@Test
 		public void testGetCompetitions()
 		{
-			Competition Equitation = inscriptions.createCompetition("Mondial du saut d'obstacle", null, false);
-			Equitation.add(Personne);
-			assertTrue(Personne.getCompetitions().contains(Equitation));
+			Competition equitation = inscriptions.createCompetition("Mondial du saut d'obstacle", null, false);
+			equitation.add(varPersonne);
+			assertTrue(varPersonne.getCompetitions().contains(equitation));
 		}
 
 		@Test
 		public void testDelete()
 		{
-		      Personne.delete();
-		      assertTrue(!inscriptions.getCandidats().contains(Personne));
+		      varPersonne.delete();
+		      assertTrue(!inscriptions.getCandidats().contains(varPersonne));
 		}
 		
-
 		@Test
 		public void testCompareTo()
 		{
-			assertEquals(0, Personne.compareTo(Personne2));
+			assertEquals(0, varPersonne.compareTo(varPersonne2));
 		}
 		
-
 		@Test
 		public void testToString()
 		{
-			assertTrue(!Personne.toString().contentEquals(""));
+			assertTrue(!varPersonne.toString().contentEquals(""));
 		}
 		
 			
