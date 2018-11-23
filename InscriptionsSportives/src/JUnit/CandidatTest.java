@@ -3,6 +3,7 @@ package JUnit;
 import static org.junit.Assert.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
@@ -40,9 +41,9 @@ public class CandidatTest {
 		
 		varEquipe = inscriptions.createEquipe("NomEquipe"); 
 		
-		varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
-		varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
-		varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
+		varCompet1 = inscriptions.createCompetition("NomCompet1", LocalDate.now().plusDays(40), true);
+		varCompet2 = inscriptions.createCompetition("NomCompet2", LocalDate.now().plusDays(40), false);
+		varCompet1bis = inscriptions.createCompetition("NomCompet1", LocalDate.now().plusDays(40), true);
 	}
 
 	@After
@@ -69,7 +70,7 @@ public class CandidatTest {
 		@Test
 		public void testGetCompetitions()
 		{
-			Competition equitation = inscriptions.createCompetition("Mondial du saut d'obstacle", null, false);
+			Competition equitation = inscriptions.createCompetition("Mondial du saut d'obstacle", LocalDate.now().plusDays(40), false);
 			equitation.add(varPersonne);
 			assertTrue(varPersonne.getCompetitions().contains(equitation));
 		}

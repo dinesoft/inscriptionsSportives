@@ -3,6 +3,7 @@ package JUnit;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Set;
 
@@ -37,9 +38,9 @@ public class PersonneTest {
 		
 		varEquipe = inscriptions.createEquipe("NomEquipe"); 
 		
-		varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
-		varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
-		varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
+		varCompet1 = inscriptions.createCompetition("NomCompet1", LocalDate.now().plusDays(40), true);
+		varCompet2 = inscriptions.createCompetition("NomCompet2", LocalDate.now().plusDays(40), false);
+		varCompet1bis = inscriptions.createCompetition("NomCompet1", LocalDate.now().plusDays(40), true);
 	}
 
 	@After
@@ -55,7 +56,7 @@ public class PersonneTest {
 	}
 
 	@Test
-	public void testSetPrenom(String prenom)
+	public void testSetPrenom()
 	{
 		varPersonne.setPrenom("Mya");
 		String setPrenom = varPersonne.getPrenom();
@@ -69,7 +70,7 @@ public class PersonneTest {
 	}
 
 	@Test
-	public void testSetMail(String mail)
+	public void testSetMail()
 	{
 		varPersonne.setMail("MyaMail");
 		String setMail = varPersonne.getMail();

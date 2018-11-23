@@ -43,9 +43,9 @@ public class InscriptionsTest {
 		
 		varEquipe = inscriptions.createEquipe("NomEquipe"); 
 		
-		varCompet1 = inscriptions.createCompetition("NomCompet1", null, true);
-		varCompet2 = inscriptions.createCompetition("NomCompet2", null, false);
-		varCompet1bis = inscriptions.createCompetition("NomCompet1", null, true);
+		varCompet1 = inscriptions.createCompetition("NomCompet1", LocalDate.now().plusDays(40), true);
+		varCompet2 = inscriptions.createCompetition("NomCompet2", LocalDate.now().plusDays(40), false);
+		varCompet1bis = inscriptions.createCompetition("NomCompet1", LocalDate.now().plusDays(40), true);
 	}
 
 	@After
