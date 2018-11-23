@@ -36,6 +36,7 @@ public class EquipeTest {
 		inscriptions = Inscriptions.getInscriptions();
 		
 		varPersonne = inscriptions.createPersonne("nomPersonne", "prenomPersonne", "mailPersonne");
+		varPersonne2 = inscriptions.createPersonne("nomPersonne2", "prenomPersonne2", "mailPersonne2");
 		
 		varEquipe = inscriptions.createEquipe("NomEquipe"); 
 		
@@ -74,13 +75,17 @@ public class EquipeTest {
 		assertEquals(sizeBefore - 1, sizeAfter);
 	}
 	
-//	@Test
-//	public void testGetPersonnesAAjouter()
-//	{
-////		varEquipe.add(varPersonne);
+	@Test
+	public void testGetPersonnesAAjouter()
+	{
+		//Ajouter les personnes qui ne sont pas déjà dans l'équipe
+		
+		assertTrue(varEquipe.getPersonnesAAjouter().contains(varPersonne));
+		
+//		varEquipe.add(varPersonne);
 //		assertEquals(varPersonne, varEquipe.getPersonnesAAjouter());
 //		assertTrue(varEquipe.getPersonnesAAjouter().contains(varPersonne));
-//	}
+	}
 	
 	@Test
 	public void testDelete()

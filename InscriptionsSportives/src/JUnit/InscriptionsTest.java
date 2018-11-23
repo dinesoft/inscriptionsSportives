@@ -100,14 +100,18 @@ public class InscriptionsTest {
 	@Test
 	public void testReinitialiser()
 	{
-		inscriptions.reinitialiser();
-		assertNotNull("Reinitialisation reussie", inscriptions);
+        inscriptions.reinitialiser();
+  
+        assertFalse(inscriptions.getInscriptions().getPersonnes().contains(varPersonne));    
 	}
 	
 	@Test
 	public void testRecharger()
 	{
-		assertNotNull(inscriptions.recharger());
+        inscriptions.recharger();
+        Inscriptions inscriptions ;
+        inscriptions = Inscriptions.getInscriptions();
+        assertFalse(inscriptions.getInscriptions().getPersonnes().contains(varPersonne));  
 	}	
 	
 	@Test
