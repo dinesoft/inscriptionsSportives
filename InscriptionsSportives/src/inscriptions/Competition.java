@@ -30,7 +30,7 @@ public class Competition implements Comparable<Competition>, Serializable
 		candidats = new TreeSet<>();
 	}
 	
-	/***
+	/**
 	 * Retourne le nom de la compétition.
 	 * @return
 	 */
