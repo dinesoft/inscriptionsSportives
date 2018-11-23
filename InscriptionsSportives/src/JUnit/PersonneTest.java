@@ -66,7 +66,7 @@ public class PersonneTest {
 	@Test
 	public void testGetMail()
 	{
-		assertTrue(varPersonne.getPrenom().contains("mailPersonne"));
+		assertTrue(varPersonne.getMail().contains("mailPersonne"));
 	}
 
 	@Test
