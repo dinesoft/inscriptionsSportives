@@ -78,13 +78,9 @@ public class EquipeTest {
 	@Test
 	public void testGetPersonnesAAjouter()
 	{
-		//Ajouter les personnes qui ne sont pas déjà dans l'équipe
-		
+	
 		assertTrue(varEquipe.getPersonnesAAjouter().contains(varPersonne));
 		
-//		varEquipe.add(varPersonne);
-//		assertEquals(varPersonne, varEquipe.getPersonnesAAjouter());
-//		assertTrue(varEquipe.getPersonnesAAjouter().contains(varPersonne));
 	}
 	
 	@Test

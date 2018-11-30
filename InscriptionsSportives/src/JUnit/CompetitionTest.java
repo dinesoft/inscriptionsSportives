@@ -93,8 +93,9 @@ public class CompetitionTest {
     @Test
     public void testGetCandidatsAInscrire()
     {
-    		//varCompet2.add(varPersonne);
-    		//assertTrue(varCompet2.getCandidatsAInscrire().contains(varPersonne));
+    		
+    		assertTrue(varCompet2.getCandidatsAInscrire().contains(varPersonne));
+
     }
     
 	@Test
