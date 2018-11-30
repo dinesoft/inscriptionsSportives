@@ -22,6 +22,7 @@ public class EquipeTest {
 	Inscriptions inscriptions ;
 	
 	Personne varPersonne ;
+	Personne varPersonne2;
 	
 	Equipe varEquipe ;; 
 	
