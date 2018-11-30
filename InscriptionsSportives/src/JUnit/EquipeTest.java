@@ -23,9 +23,8 @@ public class EquipeTest {
 	
 	Personne varPersonne ;
 	Personne varPersonne2;
-	
-	
-	Equipe varEquipe ;; 
+
+	Equipe varEquipe ;
 	
 	Competition varCompet1 ;
 	Competition varCompet2 ;
