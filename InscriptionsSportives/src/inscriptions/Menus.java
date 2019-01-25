@@ -9,34 +9,34 @@ public class Menus
 {
 	public static void main(String[] args)
 	{
-		// Creates the root menu of the application
+		// Menu principal
 		Menu rootMenu = new Menu("Root Menu");
 		
-		// Creates two options
+		// Les options du menus
 		
 		Menu personneMenu = new Menu("Menu Personne", "Personne", "p");
 		Menu equipeMenu = new Menu("Menu Equipe", "Equipe", "e");
 		Menu competitionMenu = new Menu("Menu Competition", "Competition", "c");
 		
-		// Adds an option to the rootMenu 
 		
+		// Ajout des sous-menus
 		
-		// Adds the sub-menu sayHelloMenu to the rootMenu
-		// Please notice that since Menu extends Option, polymorphism allows us to pass the Menu sayHelloMenu where an Option was expected.
 		rootMenu.add(personneMenu);
 		rootMenu.add(equipeMenu);
 		rootMenu.add(competitionMenu);
 		
-		// Adds the quit option
+		// Ajout de l'option pour quitter
 		rootMenu.addQuit("q");
 		
-		// Defines the action that will be triggered if the calculator is selected.
+		
 
 
 		
-		// Please notice that the action can be passed to the constructor of Option 
+		// Ajout des options possibles dans les sous-menus Personne / Equipe / Competition
+
+		// ***** Personne ***** //
 		personneMenu.add(				
-				new Option("Ajouter", "a", new Action()
+				new Option("Ajouter une personne", "a", new Action()
 				{
 					public void optionSelected()
 					{
@@ -44,23 +44,83 @@ public class Menus
 					}
 				}));
 		personneMenu.add(
-				new Option("Afficher", "f", new Action()
+				new Option("Afficher la liste des personnes", "f", new Action()
 				{
 					public void optionSelected()
 					{
 						System.out.println("Il faudra afficher");
 					}
 				}));
+		personneMenu.add(
+				new Option("Consulter le profil d'une personne", "c", new Action()
+				{
+					public void optionSelected()
+					{
+						System.out.println("Modifier / supprimer");
+					}
+				}));
+		personneMenu.add(
+				new Option("Inscrire une personne ‡ une compÈtion ou une Èquipe", "i", new Action()
+				{
+					public void optionSelected()
+					{
+						System.out.println("Inscription");
+					}
+				}));
+		
+		// ***** Equipe ***** //
 		equipeMenu.add(				
 				new Option("Ajouter", "a", new Action()
 				{
 					public void optionSelected()
 					{
-						System.out.println("Quelle équipe voulez-vous ajouter ?");
+						System.out.println("Quelle Èquipe voulez-vous ajouter ?");
+					}
+				}));
+		equipeMenu.add(				
+				new Option("Afficher la liste des Èquipe", "f", new Action()
+				{
+					public void optionSelected()
+					{
+						System.out.println("Afficher liste");
+					}
+				}));
+		equipeMenu.add(				
+				new Option("Consulter le profil d'une Èquipe", "c", new Action()
+				{
+					public void optionSelected()
+					{
+						System.out.println("Quelle Èquipe voulez-vous ajouter ?");
+					}
+				}));
+		equipeMenu.add(				
+				new Option("Inscrire une Èquipe ‡ une compÈtition", "i", new Action()
+				{
+					public void optionSelected()
+					{
+						System.out.println("Quelle Èquipe voulez-vous ajouter ?");
+					}
+				}));
+
+		// ***** Competition ***** //
+		competitionMenu.add(				
+				new Option("Ajouter", "a", new Action()
+				{
+					public void optionSelected()
+					{
+						System.out.println("afficher les competitions");
 					}
 				}));
 		competitionMenu.add(				
-				new Option("Afficher", "f", new Action()
+				new Option("Afficher la liste des compÈtitions", "f", new Action()
+				{
+					public void optionSelected()
+					{
+						System.out.println("afficher les competitions");
+					}
+				}));
+		competitionMenu.add(				
+				new Option("Consulter la fiche d'une compÈtion", "c", new Action()
 				{
 					public void optionSelected()
 					{
@@ -68,12 +128,12 @@ public class Menus
 					}
 				}));
 		
-		// Adds an option to go back to the rootMenu
+		// Ajout du retour vers le menu principal
 		personneMenu.addBack("r");
 		equipeMenu.addBack("r");
 		competitionMenu.addBack("r");
 		
-		// Once an option has been selected in sayHelloMenu, and the associated action is done, we will automatically go back to the rootMenu. 
+		// Retour automatique vers le menu principal
 	    personneMenu.setAutoBack(true);
 	    equipeMenu.setAutoBack(true);
 	    competitionMenu.setAutoBack(true);
