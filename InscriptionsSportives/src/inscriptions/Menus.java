@@ -1,14 +1,26 @@
 package inscriptions;
 
+import java.util.SortedSet;
+
 import commandLineMenus.Action;
 import commandLineMenus.Menu;
 import commandLineMenus.Option;
 import commandLineMenus.rendering.examples.util.InOut;
 
+import  inscriptions.Inscriptions;
+import  inscriptions.Personne;
+
 public class Menus
 {
+	
+	private static Inscriptions inscriptions;
+	
+	
 	public static void main(String[] args)
 	{
+		
+		inscriptions = Inscriptions.getInscriptions();
+		
 		// Menu principal
 		Menu rootMenu = new Menu("Root Menu");
 		
@@ -41,6 +53,8 @@ public class Menus
 					public void optionSelected()
 					{
 						System.out.println("Qui voulez-vous ajouter ?");
+						String prenom = InOut.getString("Prénom : ");
+						String mail = InOut.getString("Email : ");
 					}
 				}));
 		personneMenu.add(
@@ -48,7 +62,7 @@ public class Menus
 				{
 					public void optionSelected()
 					{
-						System.out.println("Il faudra afficher");
+						System.out.println("Voilà les personnes");
 					}
 				}));
 		personneMenu.add(
@@ -74,7 +88,8 @@ public class Menus
 				{
 					public void optionSelected()
 					{
-						System.out.println("Quelle Èquipe voulez-vous ajouter ?");
+						System.out.println("Quelle Équipe voulez-vous ajouter ?");
+						String prenom = InOut.getString("Nom: ");
 					}
 				}));
 		equipeMenu.add(				
@@ -86,19 +101,19 @@ public class Menus
 					}
 				}));
 		equipeMenu.add(				
-				new Option("Consulter le profil d'une Èquipe", "c", new Action()
+				new Option("Consulter le profil d'une Équipe", "c", new Action()
 				{
 					public void optionSelected()
 					{
-						System.out.println("Quelle Èquipe voulez-vous ajouter ?");
+						System.out.println("Afficher liste des équipes");
 					}
 				}));
 		equipeMenu.add(				
-				new Option("Inscrire une Èquipe ‡ une compÈtition", "i", new Action()
+				new Option("Inscrire une Équipe à une compÈtition", "i", new Action()
 				{
 					public void optionSelected()
 					{
-						System.out.println("Quelle Èquipe voulez-vous ajouter ?");
+						System.out.println("À quelle compétition voulez vous inscrire cette équipe ?");
 					}
 				}));
 
@@ -108,7 +123,10 @@ public class Menus
 				{
 					public void optionSelected()
 					{
-						System.out.println("afficher les competitions");
+						System.out.println("Ajoutez une nouvelle compétition");
+						String nom = InOut.getString("Nom de l'évènement: ");
+						System.out.println("À quelle date la compétition va-t-elle avoir lieu ?");
+						int dateCloture = InOut.getInt(" jj/mm/aaaa : ");
 					}
 				}));
 		competitionMenu.add(				
@@ -124,7 +142,7 @@ public class Menus
 				{
 					public void optionSelected()
 					{
-						System.out.println("afficher les competitions");
+						System.out.println("afficher une compétition particulière");
 					}
 				}));
 		
