@@ -47,104 +47,22 @@ public class Menus
 		// Ajout des options possibles dans les sous-menus Personne / Equipe / Competition
 
 		// ***** Personne ***** //
-		personneMenu.add(				
-				new Option("Ajouter une personne", "a", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("Qui voulez-vous ajouter ?");
-						String prenom = InOut.getString("Prénom : ");
-						String mail = InOut.getString("Email : ");
-					}
-				}));
-		personneMenu.add(
-				new Option("Afficher la liste des personnes", "f", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("Voilà les personnes");
-					}
-				}));
-		personneMenu.add(
-				new Option("Consulter le profil d'une personne", "c", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("Modifier / supprimer");
-					}
-				}));
-		personneMenu.add(
-				new Option("Inscrire une personne ‡ une compÈtion ou une Èquipe", "i", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("Inscription");
-					}
-				}));
+		
+		personneMenu.add(ajouterPersonneOption());   //Ajouter
+		personneMenu.add(afficherListePersonneOption());  //Afficher liste
+		personneMenu.add(profilPersonneOption());  //Consulter profil
+		personneMenu.add(inscrirePersonneOption());  //Inscrire une personne à une équipe ou une compétition
 		
 		// ***** Equipe ***** //
-		equipeMenu.add(				
-				new Option("Ajouter", "a", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("Quelle Équipe voulez-vous ajouter ?");
-						String prenom = InOut.getString("Nom: ");
-					}
-				}));
-		equipeMenu.add(				
-				new Option("Afficher la liste des Èquipe", "f", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("Afficher liste");
-					}
-				}));
-		equipeMenu.add(				
-				new Option("Consulter le profil d'une Équipe", "c", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("Afficher liste des équipes");
-					}
-				}));
-		equipeMenu.add(				
-				new Option("Inscrire une Équipe à une compÈtition", "i", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("À quelle compétition voulez vous inscrire cette équipe ?");
-					}
-				}));
+		equipeMenu.add(ajouterEquipeOption());  //Ajouter
+		equipeMenu.add(afficherListeEquipeOption());  //Afficher liste
+		equipeMenu.add(profilEquipeOption());  //Consulter profil
+		equipeMenu.add(inscrireEquipeOption()); //Inscrire une équipe à une compétition
 
 		// ***** Competition ***** //
-		competitionMenu.add(				
-				new Option("Ajouter", "a", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("Ajoutez une nouvelle compétition");
-						String nom = InOut.getString("Nom de l'évènement: ");
-						System.out.println("À quelle date la compétition va-t-elle avoir lieu ?");
-						int dateCloture = InOut.getInt(" jj/mm/aaaa : ");
-					}
-				}));
-		competitionMenu.add(				
-				new Option("Afficher la liste des compÈtitions", "f", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("afficher les competitions");
-					}
-				}));
-		competitionMenu.add(				
-				new Option("Consulter la fiche d'une compÈtion", "c", new Action()
-				{
-					public void optionSelected()
-					{
-						System.out.println("afficher une compétition particulière");
-					}
-				}));
+		competitionMenu.add(ajouterCompetitionOption());  //Ajouter
+		competitionMenu.add(afficherListeCompetitionOption());  //Afficher liste
+		competitionMenu.add(profilCompetitionOption()); //Consulter profil
 		
 		// Ajout du retour vers le menu principal
 		personneMenu.addBack("r");
@@ -158,4 +76,139 @@ public class Menus
 		
 		rootMenu.start();
 	}
+	
+	// Création des options
+	
+	// ***** Personne ***** //
+	/* Ajouter */
+	private static Option ajouterPersonneOption(){
+		
+		return
+		new Option("Ajouter une personne", "a", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("Qui voulez-vous ajouter ?");
+				String prenom = InOut.getString("Prénom : ");
+				String mail = InOut.getString("Email : ");
+			}
+		});
+	}
+	/* Afficher liste */
+	private static Option afficherListePersonneOption() {
+		return
+		new Option("Afficher la liste des personnes", "f", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("Voilà les personnes");
+			}
+		});
+	}
+	/* Consulter profil */
+	private static Option profilPersonneOption() {
+		return
+		new Option("Consulter le profil d'une personne", "c", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("Modifier / supprimer");
+			}
+		});
+	}
+	/* Inscrire à une équipe ou une compétition */
+	private static Option inscrirePersonneOption() {
+		return
+		new Option("Inscrire une personne ‡ une compÈtion ou une Èquipe", "i", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("Inscription");
+			}
+		});
+	}
+	// ***** Equipe ***** //
+	/* Ajouter */
+	private static Option ajouterEquipeOption() {
+		return
+		new Option("Ajouter", "a", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("Quelle Équipe voulez-vous ajouter ?");
+				String prenom = InOut.getString("Nom: ");
+			}
+		});
+	}
+	/* Afficher liste */
+	private static Option afficherListeEquipeOption() {
+		return
+		new Option("Afficher la liste des Èquipe", "f", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("Afficher liste");
+			}
+		});
+	}
+	/* Consulter profil */
+	private static Option profilEquipeOption() {
+		return
+		new Option("Consulter le profil d'une Équipe", "c", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("Afficher liste des équipes");
+			}
+		});
+	}
+	/* Inscrire à une compétition */
+	private static Option inscrireEquipeOption() {
+		return
+		new Option("Inscrire une Équipe à une compÈtition", "i", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("À quelle compétition voulez vous inscrire cette équipe ?");
+			}
+		});
+	}
+	// ***** Competition ***** //
+	/* Ajouter */	
+	private static Option ajouterCompetitionOption() {
+		return
+		new Option("Ajouter", "a", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("Ajoutez une nouvelle compétition");
+				String nom = InOut.getString("Nom de l'évènement: ");
+				System.out.println("À quelle date la compétition va-t-elle avoir lieu ?");
+				int dateCloture = InOut.getInt(" jj/mm/aaaa : ");
+			}
+		});
+	}
+	/* Afficher liste */
+	private static Option afficherListeCompetitionOption() {
+		return
+		new Option("Afficher la liste des compÈtitions", "f", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("afficher les competitions");
+			}
+		});
+	}
+	/* Consulter profil */
+	private static Option profilCompetitionOption() {
+		return
+		new Option("Consulter la fiche d'une compÈtion", "c", new Action()
+		{
+			public void optionSelected()
+			{
+				System.out.println("afficher une compétition particulière");
+			}
+		});
+	}
+	
 }
