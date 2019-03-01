@@ -1,8 +1,10 @@
 package inscriptions;
 
 import java.util.SortedSet;
+import java.util.ArrayList;
 
 import commandLineMenus.Action;
+import commandLineMenus.List;
 import commandLineMenus.Menu;
 import commandLineMenus.Option;
 import commandLineMenus.rendering.examples.util.InOut;
@@ -111,19 +113,122 @@ public class Menus
 	}
 	/* Consulter profil */
 	private static Option profilPersonneOption() {
-		return
-		new Option("Consulter le profil d'une personne", "c", new Action()
+//		return
+//		new Option("Consulter le profil d'une personne", "c", new Action()
+//		{
+//			public void optionSelected()
+//			{
+//				System.out.println("Modifier / supprimer");
+//			}
+//		});
+		
+		return new List<Personne>("Editer le profil d'une personne", "e", 
+				() -> new ArrayList<>(inscriptions.getPersonnes()),
+				(element) -> getSomeoneMenu(element)
+				);		
+	}
+	/**/
+	
+	private static Option getSomeoneMenu(Personne personne)
+	{
+		Menu someoneMenu = new Menu("Accéder aux options pour  "
+				+personne.getPrenom()+" "+personne.getNom(),null);
+		
+		someoneMenu.add(voirProfilPersonneOption(personne));
+		someoneMenu.add(ajouterAEquipePersonneOption(personne));
+		someoneMenu.add(ajouterACompetitionPersonneOption(personne));
+		
+		
+		someoneMenu.setAutoBack(true);
+		someoneMenu.addQuit("q");
+		return someoneMenu;
+	}
+	
+	private static Option voirProfilPersonneOption(Personne personne)
+	{
+		return new Option("Consulter profil", "p", new Action()
 		{
+			@Override
 			public void optionSelected()
 			{
-				System.out.println("Modifier / supprimer");
+				System.out.println("Prénom : "+personne.getPrenom()+"\nNom : "+
+						personne.getNom()+"\nMail : "+personne.getMail());
+				if(!personne.getEquipes().isEmpty())
+				{
+					System.out.println(personne.getEquipes().toString());
+				}
+				else
+				{
+					System.out.println(personne.getPrenom()+ " n'est dans aucune équipe");
+				}
+				if(!personne.getCompetitions().isEmpty())
+				{
+					System.out.println("Participe à "+personne.getCompetitions().toString());
+				}
+				else
+				{
+					System.out.println(personne.getPrenom()+" ne participe à aucune compétition");
+				}
 			}
 		});
 	}
+	private static Option ajouterAEquipePersonneOption(Personne personne)
+	{
+		return new Option("Integrer cette personne à une équipe", "e", new Action()
+		{
+			@Override
+			public void optionSelected()
+			{
+				
+			}
+		});
+	}	
+	private static Option ajouterACompetitionPersonneOption(Personne personne)
+	{
+		return new Option("Inscrire cette personne a une competition", "c", new Action()
+		{
+			@Override
+			public void optionSelected()
+			{
+			
+			}
+		});
+	}	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/* Inscrire à une équipe ou une compétition */
 	private static Option inscrirePersonneOption() {
 		return
-		new Option("Inscrire une personne ‡ une compÈtion ou une Èquipe", "i", new Action()
+		new Option("Inscrire une personne a une competition ou une equipe", "i", new Action()
 		{
 			public void optionSelected()
 			{
@@ -159,7 +264,7 @@ public class Menus
 		});
 	}
 	/* Consulter profil */
-	private static Option profilEquipeOption() {
+	private static  Option profilEquipeOption() {
 		return
 		new Option("Consulter le profil d'une Équipe", "c", new Action()
 		{
@@ -167,7 +272,7 @@ public class Menus
 			{
 				System.out.println("Modifier");
 			}
-		});
+		});	
 	}
 	/* Inscrire à une compétition */
 	private static Option inscrireEquipeOption() {
