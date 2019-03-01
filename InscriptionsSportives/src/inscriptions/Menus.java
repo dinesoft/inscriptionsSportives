@@ -89,8 +89,10 @@ public class Menus
 			public void optionSelected()
 			{
 				System.out.println("Qui voulez-vous ajouter ?");
+				String nom = InOut.getString("Nom : ");
 				String prenom = InOut.getString("Prénom : ");
 				String mail = InOut.getString("Email : ");
+				inscriptions.createPersonne(nom, prenom, mail);
 			}
 		});
 	}
@@ -102,6 +104,8 @@ public class Menus
 			public void optionSelected()
 			{
 				System.out.println("Voilà les personnes");
+				SortedSet<Personne> lesPersonnes = inscriptions.getPersonnes();
+				System.out.println(lesPersonnes);
 			}
 		});
 	}
@@ -136,7 +140,8 @@ public class Menus
 			public void optionSelected()
 			{
 				System.out.println("Quelle Équipe voulez-vous ajouter ?");
-				String prenom = InOut.getString("Nom: ");
+				String nom = InOut.getString("Le nom : ");
+				inscriptions.createEquipe(nom);
 			}
 		});
 	}
@@ -148,6 +153,8 @@ public class Menus
 			public void optionSelected()
 			{
 				System.out.println("Afficher liste");
+				SortedSet<Equipe> lesEquipes = inscriptions.getEquipes();
+				System.out.println(lesEquipes);
 			}
 		});
 	}
@@ -158,7 +165,7 @@ public class Menus
 		{
 			public void optionSelected()
 			{
-				System.out.println("Afficher liste des équipes");
+				System.out.println("Modifier");
 			}
 		});
 	}
@@ -196,6 +203,8 @@ public class Menus
 			public void optionSelected()
 			{
 				System.out.println("afficher les competitions");
+				SortedSet<Competition> lesCompetitions = inscriptions.getCompetitions();
+				System.out.println(lesCompetitions);
 			}
 		});
 	}
