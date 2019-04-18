@@ -26,7 +26,7 @@ public class Menus
 		// Menu principal
 		Menu rootMenu = new Menu("Root Menu");
 		
-		// Les options du menus
+		// Les options du menu
 		
 		Menu personneMenu = new Menu("Menu Personne", "Personne", "p");
 		Menu equipeMenu = new Menu("Menu Equipe", "Equipe", "e");
@@ -43,9 +43,6 @@ public class Menus
 		rootMenu.addQuit("q");
 		
 		
-
-
-		
 		// Ajout des options possibles dans les sous-menus Personne / Equipe / Competition
 
 		// ***** Personne ***** //
@@ -53,13 +50,11 @@ public class Menus
 		personneMenu.add(ajouterPersonneOption());   //Ajouter
 		personneMenu.add(afficherListePersonneOption());  //Afficher liste
 		personneMenu.add(profilPersonneOption());  //Consulter profil
-		personneMenu.add(inscrirePersonneOption());  //Inscrire une personne à une équipe ou une compétition
 		
 		// ***** Equipe ***** //
 		equipeMenu.add(ajouterEquipeOption());  //Ajouter
 		equipeMenu.add(afficherListeEquipeOption());  //Afficher liste
 		equipeMenu.add(profilEquipeOption());  //Consulter profil
-		equipeMenu.add(inscrireEquipeOption()); //Inscrire une équipe à une compétition
 
 		// ***** Competition ***** //
 		competitionMenu.add(ajouterCompetitionOption());  //Ajouter
@@ -71,15 +66,11 @@ public class Menus
 		equipeMenu.addBack("r");
 		competitionMenu.addBack("r");
 		
-		// Retour automatique vers le menu principal
-	    personneMenu.setAutoBack(true);
-	    equipeMenu.setAutoBack(true);
-	    competitionMenu.setAutoBack(true);
-		
 		rootMenu.start();
 	}
 	
 	// Création des options
+	
 	
 	// ***** Personne ***** //
 	/* Ajouter */
@@ -113,37 +104,33 @@ public class Menus
 	}
 	/* Consulter profil */
 	private static Option profilPersonneOption() {
-//		return
-//		new Option("Consulter le profil d'une personne", "c", new Action()
-//		{
-//			public void optionSelected()
-//			{
-//				System.out.println("Modifier / supprimer");
-//			}
-//		});
 		
 		return new List<Personne>("Editer le profil d'une personne", "e", 
 				() -> new ArrayList<>(inscriptions.getPersonnes()),
-				(element) -> getSomeoneMenu(element)
+				(element) -> getPersonneSousMenu(element)
 				);		
-	}
-	/**/
-	
-	private static Option getSomeoneMenu(Personne personne)
+	} 
+
+	/* Accéder aux options d'une personne*/
+	private static Option getPersonneSousMenu(Personne personne)
 	{
-		Menu someoneMenu = new Menu("Accéder aux options pour  "
+		Menu personneSousMenu = new Menu("Accéder aux options pour  "
 				+personne.getPrenom()+" "+personne.getNom(),null);
 		
-		someoneMenu.add(voirProfilPersonneOption(personne));
-		someoneMenu.add(ajouterAEquipePersonneOption(personne));
-		someoneMenu.add(ajouterACompetitionPersonneOption(personne));
+		personneSousMenu.add(voirProfilPersonneOption(personne));
+		personneSousMenu.add(editerPrenomPersonneOption(personne));
+		personneSousMenu.add(editerNomPersonneOption(personne));
+//		personneSousMenu.add(ajouterAEquipePersonneOption(personne));
+//		personneSousMenu.add(ajouterACompetitionPersonneOption(personne));
+		personneSousMenu.add(supprimerPersonneOption(personne));
 		
 		
-		someoneMenu.setAutoBack(true);
-		someoneMenu.addQuit("q");
-		return someoneMenu;
+//		personneSousMenu.setAutoBack(true);
+		personneSousMenu.addBack("r");
+//		personneSousMenu.addQuit("q");
+		return personneSousMenu;
 	}
-	
+	/* ---- Profil ---- */
 	private static Option voirProfilPersonneOption(Personne personne)
 	{
 		return new Option("Consulter profil", "p", new Action()
@@ -172,70 +159,75 @@ public class Menus
 			}
 		});
 	}
-	private static Option ajouterAEquipePersonneOption(Personne personne)
-	{
-		return new Option("Integrer cette personne à une équipe", "e", new Action()
-		{
-			@Override
-			public void optionSelected()
-			{
-				
-			}
-		});
-	}	
-	private static Option ajouterACompetitionPersonneOption(Personne personne)
-	{
-		return new Option("Inscrire cette personne a une competition", "c", new Action()
-		{
-			@Override
-			public void optionSelected()
-			{
-			
-			}
-		});
-	}	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/* Inscrire à une équipe ou une compétition */
-	private static Option inscrirePersonneOption() {
+	/* ---- Editer prénom ---- */
+	private static Option editerPrenomPersonneOption(Personne personne){
 		return
-		new Option("Inscrire une personne a une competition ou une equipe", "i", new Action()
+		new Option("Modifier le prénom", "m", new Action()
 		{
+			@Override
 			public void optionSelected()
 			{
-				System.out.println("Inscription");
+				System.out.println("Veuillez saisir le nouveau prenom :");
+				String prenom = InOut.getString("Prenom :");
+				personne.setPrenom(prenom);
+				System.out.println("Le prénom à bien été changé");
+			}
+		});
+	}	
+	/* ---- Editer nom ---- */
+	private static Option editerNomPersonneOption(Personne personne){
+		return
+		new Option("Modifier le nom", "n", new Action()
+		{
+			@Override
+			public void optionSelected()
+			{
+				System.out.println("Veuillez saisir le nouveau nom :");
+				String nom = InOut.getString("Nom :");
+				personne.setNom(nom);
+				System.out.println("Le prénom à bien été changé");
 			}
 		});
 	}
+//	/* ---- Ajouter à une équipe ---- */
+//	private static Option ajouterAEquipePersonneOption(Personne personne)
+//	{
+//		return new Option("Integrer cette personne à une équipe", "e", new Action()
+//		{
+//			@Override
+//			public void optionSelected()
+//			{
+//				
+//			}
+//		});
+//	}
+//	/* ---- Ajouter à une compétition ---- */
+//	private static Option ajouterACompetitionPersonneOption(Personne personne)
+//	{
+//		return new Option("Inscrire cette personne a une competition", "c", new Action()
+//		{
+//			@Override
+//			public void optionSelected()
+//			{
+//			
+//			}
+//		});
+//	}	
+	/* ---- Supprimer ---- */
+	private static Option supprimerPersonneOption(Personne personne)
+	{
+		return 
+		new Option("Inscrire cette personne a une competition", "c", new Action()
+		{
+			@Override
+			public void optionSelected()
+		    {
+		        personne.delete();
+		    }
+		});
+	}		
+
+	
 	// ***** Equipe ***** //
 	/* Ajouter */
 	private static Option ajouterEquipeOption() {
@@ -265,26 +257,99 @@ public class Menus
 	}
 	/* Consulter profil */
 	private static  Option profilEquipeOption() {
-		return
-		new Option("Consulter le profil d'une Équipe", "c", new Action()
-		{
-			public void optionSelected()
-			{
-				System.out.println("Modifier");
-			}
-		});	
+	return  
+	new List<Equipe>("Editer le profil d'une équipe", "e", 
+						() -> new ArrayList<>(inscriptions.getEquipes()),
+						(element) -> getEquipeSousMenu(element)
+						);		
+		
 	}
-	/* Inscrire à une compétition */
-	private static Option inscrireEquipeOption() {
-		return
-		new Option("Inscrire une Équipe à une compÈtition", "i", new Action()
+	
+	private static Option getEquipeSousMenu(Equipe equipe)
+	{
+		Menu equipeSousMenu = new Menu("Accéder aux options pour  "
+				+equipe.getNom(),null);
+		
+		equipeSousMenu.add(voirProfilEquipeOption(equipe));
+		equipeSousMenu.add(editerNomEquipeOption(equipe));
+		equipeSousMenu.add(ajouterMembreAEquipeOption(equipe));
+		equipeSousMenu.add(supprimerMembreAEquipeOption(equipe));
+		equipeSousMenu.add(supprimerEquipeOption(equipe));
+//		equipeSousMenu.add(ajouterACompetitionEquipeOption(equipe));
+		
+		
+		
+		equipeSousMenu.setAutoBack(true);
+		equipeSousMenu.addQuit("q");
+		return equipeSousMenu;	
+		
+	}	
+	
+	/* ---- Profil ---- */	
+	private static Option voirProfilEquipeOption(Equipe equipe) {
+		return 
+		new Option("Consulter profil", "p", new Action()
 		{
+			@Override
 			public void optionSelected()
 			{
-				System.out.println("À quelle compétition voulez vous inscrire cette équipe ?");
+				System.out.println("Nom : "+ equipe.getNom());
+				
+				if(!equipe.getCompetitions().isEmpty())
+				{
+					System.out.println("Participe à "+equipe.getCompetitions().toString());
+				}
+				System.out.println("Membres : "+ equipe.getMembres());
+				
+			}
+		});		
+	}
+	/* ---- Editer nom ---- */
+	private static Option editerNomEquipeOption(Equipe equipe){
+		return
+		new Option("Modifier le nom de l'équipe", "m", new Action()
+		{
+			@Override
+			public void optionSelected()
+			{
+				System.out.println("Veuillez saisir le nouveau nom :");
+				String nom = InOut.getString("Nom :");
+				equipe.setNom(nom);
+				System.out.println("Le nom de l'équipe à bien été changé");
 			}
 		});
-	}
+	}	
+	/* ---- Ajouter membre ---- */
+    private static List<Personne> ajouterMembreAEquipeOption(Equipe equipe)
+    {
+        return new List<>("Ajouter un membre à l'équipe", "a",
+        () -> new ArrayList<>(Inscriptions.getInscriptions().getPersonnes()),
+        (index, element) -> {equipe.add(element);}
+        );
+    }	
+    /* ---- Supprimer membre ---- */
+    private static List<Personne> supprimerMembreAEquipeOption(Equipe equipe)
+    {
+        return new List<>("Supprimer un membre", "s",
+        () -> new ArrayList<>(equipe.getMembres()),
+        (index, element) -> {equipe.remove(element);}
+        );
+    }    	
+    /* ---- Supprimer équipe ---- */
+    private static Option supprimerEquipeOption(Equipe equipe)
+    {
+        return new Option("Supprimer l'équipe", "S",
+        () ->
+        {
+            equipe.delete();
+        }
+        );
+    }   
+	
+//	private static Option ajouterACompetitionEquipeOption(Equipe equipe) {.}
+	
+
+    
 	// ***** Competition ***** //
 	/* Ajouter */	
 	private static Option ajouterCompetitionOption() {
