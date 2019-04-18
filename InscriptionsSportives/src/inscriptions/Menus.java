@@ -1,6 +1,7 @@
 package inscriptions;
 
 import java.util.SortedSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import commandLineMenus.Action;
@@ -352,42 +353,123 @@ public class Menus
     
 	// ***** Competition ***** //
 	/* Ajouter */	
-	private static Option ajouterCompetitionOption() {
-		return
-		new Option("Ajouter", "a", new Action()
-		{
-			public void optionSelected()
-			{
-				System.out.println("Ajoutez une nouvelle compétition");
-				String nom = InOut.getString("Nom de l'évènement: ");
-				System.out.println("À quelle date la compétition va-t-elle avoir lieu ?");
-				int dateCloture = InOut.getInt(" jj/mm/aaaa : ");
-			}
-		});
-	}
+//	private static Option ajouterCompetitionOption() {
+//		return
+//		new Option("Ajouter", "a", new Action()
+//		{
+//			public void optionSelected()
+//			{
+//				System.out.println("Ajoutez une nouvelle compétition");
+//				String nom = InOut.getString("Nom de l'évènement: ");
+//				System.out.println("À quelle date la compétition va-t-elle avoir lieu ?");
+//				int dateCloture = InOut.getInt(" jj/mm/aaaa : ");
+//			}
+//		});
+//	}
+    private static Option ajouterCompetitionOption(){
+        return new Option("Ajouter une compétition", "a", () -> {
+        	
+        	
+        	try {
+                Inscriptions.getInscriptions().createCompetition(InOut.getString("Nom de l'évènement : "), 
+                		LocalDate.of(InOut.getInt("Date de la compétition \nAnnee :"),
+                 InOut.getInt("Mois :"),
+                 InOut.getInt("Jour :")), 
+                 InOut.getInt("0 - Compétition solo \n1 - Compétition en Equipe : ") == 1);
+                } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }	
 	/* Afficher liste */
 	private static Option afficherListeCompetitionOption() {
 		return
-		new Option("Afficher la liste des compÈtitions", "f", new Action()
+		new Option("Afficher la liste des compétitions", "f", new Action()
 		{
 			public void optionSelected()
 			{
-				System.out.println("afficher les competitions");
+				System.out.println("Voici la liste de toutes les compétitions ");
 				SortedSet<Competition> lesCompetitions = inscriptions.getCompetitions();
 				System.out.println(lesCompetitions);
+				
 			}
 		});
 	}
 	/* Consulter profil */
-	private static Option profilCompetitionOption() {
-		return
-		new Option("Consulter la fiche d'une compÈtion", "c", new Action()
+	private static  Option profilCompetitionOption() {
+	return  
+	new List<Competition>("Editer la fiche d'une compétition", "e", 
+						() -> new ArrayList<>(inscriptions.getCompetitions()),
+						(element) -> getCompetitionSousMenu(element)
+						);		
+		
+	}
+	private static Option getCompetitionSousMenu(Competition competition)
+	{
+		Menu competitionSousMenu = new Menu("Accéder aux options pour  "
+				+competition.getNom(),null);
+		
+		competitionSousMenu.add(voirFicheCompetitionOption(competition));
+		competitionSousMenu.add(editerNomCompetitionOption(competition));
+		competitionSousMenu.add(supprimerCompetitionOption(competition));
+		
+//		equipeSousMenu.add(ajouterCandidatACompetitionOption(equipe));
+//		equipeSousMenu.add(supprimerCandidatACompetitionOption(equipe));
+//		equipeSousMenu.add(supprimerCompetitionOption(equipe));
+//		equipeSousMenu.add(ajouterACompetitionEquipeOption(equipe));
+		
+		
+		
+		competitionSousMenu.addBack("r");
+		return competitionSousMenu;	
+		
+	}
+	private static Option voirFicheCompetitionOption(Competition competition)
+	{
+		return new Option("Voir la fiche détaillée d'une compétition", "v", new Action()
 		{
+			@Override
 			public void optionSelected()
 			{
-				System.out.println("afficher une compétition particulière");
+				System.out.println("Nom de la compétition : " +competition.getNom());
+				if (competition.inscriptionsOuvertes() == true) 
+					System.out.println("Les inscriptions sont ouvertes " );
+				else
+					System.out.println("Les inscriptions sont cloturées " );
+				System.out.println("Date cloture : " +competition.getDateCloture());
+				if (competition.estEnEquipe() == true) 
+					System.out.println("C'est une competition en équipe" );
+				else
+					System.out.println("C'est une competition en solo" );
+			}
+		});
+	}	
+	private static Option editerNomCompetitionOption(Competition competition)
+	{
+		return new Option("Modifier le nom de la compétition", "m", new Action()
+		{
+			@Override
+			public void optionSelected()
+			{
+				System.out.println("Veuillez saisir le nouveau super nom (choisissez bien cette fois)");
+				String nom = InOut.getString("Nom : ");
+				competition.setNom(nom);
+				System.out.println("Le nouveau nom est : "+competition.getNom() + " c'est beaucoup plus sympa !");
 			}
 		});
 	}
+	private static Option supprimerCompetitionOption(Competition competition)
+	{
+		return new Option("Supprimer la compétition", "s", new Action()
+		{
+			@Override
+			public void optionSelected()
+			{
+				competition.delete();
+				System.out.println("La compétition"+ competition.getNom() + "à bien été supprimée, ne le regrettez pas car vous ne pourrez pas revenir en arrière");
+			}
+		});
+		
+	}	
 	
 }
