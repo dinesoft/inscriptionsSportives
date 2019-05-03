@@ -300,7 +300,19 @@ public class Menus
 				{
 					System.out.println("Participe à "+equipe.getCompetitions().toString());
 				}
-				System.out.println("Membres : "+ equipe.getMembres());
+				else 
+				{
+					System.out.println(equipe.getNom()+" ne participe à aucune compétition, c'est un peu triste ");
+				}
+				if(!equipe.getMembres().isEmpty())
+				{
+					System.out.println("Membres : "+ equipe.getMembres());
+				}
+				else 
+				{
+					System.out.println("Personne n'a encore la chance de faire parti de cette équipe... ");
+				}
+//				System.out.println("Membres : "+ equipe.getMembres());
 				
 			}
 		});		
@@ -411,19 +423,15 @@ public class Menus
 		
 		competitionSousMenu.add(voirFicheCompetitionOption(competition));
 		competitionSousMenu.add(editerNomCompetitionOption(competition));
+		competitionSousMenu.add(ajouterCandidatACompetitionOption(competition));
+		competitionSousMenu.add(supprimerCandidatACompetitionOption(competition));
 		competitionSousMenu.add(supprimerCompetitionOption(competition));
-		
-//		equipeSousMenu.add(ajouterCandidatACompetitionOption(equipe));
-//		equipeSousMenu.add(supprimerCandidatACompetitionOption(equipe));
-//		equipeSousMenu.add(supprimerCompetitionOption(equipe));
-//		equipeSousMenu.add(ajouterACompetitionEquipeOption(equipe));
-		
-		
 		
 		competitionSousMenu.addBack("r");
 		return competitionSousMenu;	
 		
 	}
+	/* ---- Afficher profil ---- */
 	private static Option voirFicheCompetitionOption(Competition competition)
 	{
 		return new Option("Voir la fiche détaillée d'une compétition", "v", new Action()
@@ -440,10 +448,11 @@ public class Menus
 				if (competition.estEnEquipe() == true) 
 					System.out.println("C'est une competition en équipe" );
 				else
-					System.out.println("C'est une competition en solo" );
+					System.out.println("C'est une competition en solo, c'est du chacun pour soi" );
 			}
 		});
 	}	
+	/* ---- Editer nom ---- */
 	private static Option editerNomCompetitionOption(Competition competition)
 	{
 		return new Option("Modifier le nom de la compétition", "m", new Action()
@@ -458,9 +467,26 @@ public class Menus
 			}
 		});
 	}
+	/* ---- Ajouter candidat ---- */
+	private static Option ajouterCandidatACompetitionOption(Competition competition)
+	{
+        return new List<>("Ajouter une personne dans la compétition", "a",
+        () -> new ArrayList<>(Inscriptions.getInscriptions().getCandidats()),
+        (index, element) -> {competition.add((Personne) element);}
+        );
+	}
+	/* ---- Supprimer candidat, attention c'est méchant ---- */
+	private static Option supprimerCandidatACompetitionOption(Competition competition)
+	{
+		return new List<>("Supprimer un candidat", "s", () ->
+        new ArrayList<>(competition.getCandidats()),
+        (index, element) -> {competition.remove(element);
+        });
+	}
+	/* ---- Supprimer compétition, attention il n'y a pas de retour en arrière ---- */
 	private static Option supprimerCompetitionOption(Competition competition)
 	{
-		return new Option("Supprimer la compétition", "s", new Action()
+		return new Option("Supprimer la compétition", "S", new Action()
 		{
 			@Override
 			public void optionSelected()
