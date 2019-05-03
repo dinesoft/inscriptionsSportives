@@ -446,9 +446,12 @@ public class Menus
 					System.out.println("Les inscriptions sont cloturées " );
 				System.out.println("Date cloture : " +competition.getDateCloture());
 				if (competition.estEnEquipe() == true) 
-					System.out.println("C'est une competition en équipe" );
+					System.out.println("C'est une competition en équipe");
+				
 				else
 					System.out.println("C'est une competition en solo, c'est du chacun pour soi" );
+				
+				System.out.println("Voici les candidats inscrits :"+competition.getCandidats());
 			}
 		});
 	}	
@@ -470,11 +473,48 @@ public class Menus
 	/* ---- Ajouter candidat ---- */
 	private static Option ajouterCandidatACompetitionOption(Competition competition)
 	{
-        return new List<>("Ajouter une personne dans la compétition", "a",
-        () -> new ArrayList<>(Inscriptions.getInscriptions().getCandidats()),
-        (index, element) -> {competition.add((Personne) element);}
-        );
+		if (competition.estEnEquipe() == true) 
+		{
+        return new List<>("Ajouter une équipe à la compétition", "a",     		
+        		
+        () -> new ArrayList<>(Inscriptions.getInscriptions().getEquipes()),
+       (index, element) -> {competition.add((Equipe) element);});
+        
+       }
+        		else
+				{
+        	        return new List<>("Ajouter un candidat à la compétition", "a",     		
+        	        		
+        	                () -> new ArrayList<>(Inscriptions.getInscriptions().getPersonnes()),
+        	               (index, element) -> {competition.add((Personne) element);});
+				}
+   		
+        		
+        		
+        		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/* ---- Supprimer candidat, attention c'est méchant ---- */
 	private static Option supprimerCandidatACompetitionOption(Competition competition)
 	{
