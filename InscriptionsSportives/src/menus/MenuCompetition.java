@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.SortedSet;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import commandLineMenus.Action;
 import commandLineMenus.List;
 import commandLineMenus.Menu;
@@ -32,19 +36,31 @@ public class MenuCompetition {
 //			}
 //		});
 //	}
-	public static Option ajouterCompetitionOption(){
+	public static Option ajouterCompetitionOption(Inscriptions inscriptions){
         return new Option("Ajouter une compétition", "a", () -> {
         	
-        	
-        	try {
-                Inscriptions.getInscriptions().createCompetition(InOut.getString("Nom de l'évènement : "), 
-                		LocalDate.of(InOut.getInt("Date de la compétition \nAnnee :"),
-                 InOut.getInt("Mois :"),
-                 InOut.getInt("Jour :")), 
-                 InOut.getInt("0 - Compétition solo \n1 - Compétition en Equipe : ") == 1);
-                } catch (Exception e) {
-                e.printStackTrace();
-            }
+        		String nom = InOut.getString("Nom de la comp�tition : ");
+		        int day = InOut.getInt("nombre de jour avans la cloture des inscriptions : ");
+		        LocalDate date = LocalDate.now().plusDays(day);
+				String enEquipe = InOut.getString("la comp�tition est-elle en �quipe ? : ");
+				System.out.println(enEquipe);
+				boolean type;
+				type = enEquipe.equals("oui");
+                inscriptions.createCompetition(nom, date, type);
+
+        	try
+    		{
+    			Session s = hibernates.BDD.getSession();
+    			Transaction t = s.beginTransaction();
+    			s.persist(hibernates.Competition.setCompetition(nom, date, type));
+    			t.commit();
+    			s.close();
+    		}
+    		catch (HibernateException ex)
+    		{
+    			throw new RuntimeException("Probleme de configuration : "
+    					+ ex.getMessage(), ex);
+    		}
         });
     }	
 	

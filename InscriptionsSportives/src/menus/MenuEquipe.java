@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.SortedSet;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import commandLineMenus.Action;
 import commandLineMenus.List;
 import commandLineMenus.Menu;
@@ -27,7 +31,20 @@ public class MenuEquipe {
 				System.out.println("Quelle Équipe voulez-vous ajouter ?");
 				String nom = InOut.getString("Le nom : ");
 				inscriptions.createEquipe(nom);
-			}
+			 try
+     		{
+     			Session s = hibernates.BDD.getSession();
+     			Transaction t = s.beginTransaction();
+     			s.persist(hibernates.Equipe.setEquipe(nom));
+     			t.commit();
+     			s.close();
+     		}
+     		catch (HibernateException ex)
+     		{
+     			throw new RuntimeException("Probleme de configuration : "
+     					+ ex.getMessage(), ex);
+     		}
+		}
 		});
 	}
 	/* Afficher liste */

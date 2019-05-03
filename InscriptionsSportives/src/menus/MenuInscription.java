@@ -51,7 +51,7 @@ public class MenuInscription {
 	private Menu getCompetitionMenu(Inscriptions inscriptions)
 	{
 	Menu competitionMenu = new Menu("Menu Competition", "Competition", "c");
-	competitionMenu.add(MenuCompetition.ajouterCompetitionOption());  //Ajouter
+	competitionMenu.add(MenuCompetition.ajouterCompetitionOption(inscriptions));  //Ajouter
 	competitionMenu.add(MenuCompetition.afficherListeCompetitionOption(inscriptions));  //Afficher liste
 	competitionMenu.add(MenuCompetition.profilCompetitionOption(inscriptions)); //Consulter profil
 	competitionMenu.addBack("r"); // Ajout du retour vers le menu principal

@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.SortedSet;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import commandLineMenus.Action;
 import commandLineMenus.List;
 import commandLineMenus.Menu;
@@ -31,6 +35,19 @@ public class MenuPersonne {
 					String prenom = InOut.getString("Prénom : ");
 					String mail = InOut.getString("Email : ");
 					inscriptions.createPersonne(nom, prenom, mail);
+					 try
+		        		{
+		        			Session s = hibernates.BDD.getSession();
+		        			Transaction t = s.beginTransaction();
+		        			s.persist(hibernates.Personne.setPersonne(nom, prenom, mail	));
+		        			t.commit();
+		        			s.close();
+		        		}
+		        		catch (HibernateException ex)
+		        		{
+		        			throw new RuntimeException("Probleme de configuration : "
+		        					+ ex.getMessage(), ex);
+		        		}
 				}
 			});
 		}
