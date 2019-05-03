@@ -25,7 +25,7 @@ public class BDD
 	public static Session getSession() throws HibernateException
 	{
 		Configuration configuration = new Configuration()
-				.configure("Hibernates/hibernate.cfg.xml");
+				.configure("hibernates/hibernate.cfg.xml");
 		ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties()).build();
 		SessionFactory sessionFactory = configuration

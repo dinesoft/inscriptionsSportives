@@ -17,12 +17,12 @@
 			
 	<property name="hbm2ddl.auto">update</property>
 	
-	<mapping class="Hibernates.Personne" />
-	<mapping class="Hibernates.Equipe" />
-	<mapping class="Hibernates.Candidat" />
-	<mapping class="Hibernates.Competition" />
-	<mapping class="Hibernates.Appartenir" />
-	<mapping class="Hibernates.Inscrire" />
+	<mapping class="hibernates.Personne" />
+	<mapping class="hibernates.Equipe" />
+	<mapping class="hibernates.Candidat" />
+	<mapping class="hibernates.Competition" />
+	<mapping class="hibernates.Appartenir" />
+	<mapping class="hibernates.Inscrire" />
 
          
 </session-factory>
